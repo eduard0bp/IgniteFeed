@@ -1,5 +1,6 @@
 import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar'
+import { Post } from './components/Post'
 
 import './App.scss'
 
@@ -10,18 +11,7 @@ export const App = () => {
       <div className="wrapper">
         <Sidebar />
         <main>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora id
-            corporis dolorum sequi maiores, quisquam magnam. Facere, quaerat sit
-            quod cum distinctio soluta quas inventore exercitationem saepe
-            asperiores minus voluptate!
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora id
-            corporis dolorum sequi maiores, quisquam magnam. Facere, quaerat sit
-            quod cum distinctio soluta quas inventore exercitationem saepe
-            asperiores minus voluptate!
-          </p>
+          <Post/>
         </main>
       </div>
     </div>
