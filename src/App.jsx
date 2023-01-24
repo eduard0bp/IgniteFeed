@@ -11,7 +11,8 @@ export const App = () => {
       <div className="wrapper">
         <Sidebar />
         <main>
-          <Post/>
+          <Post />
+          <Post />
         </main>
       </div>
     </div>
