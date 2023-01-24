@@ -30,10 +30,19 @@ export const Post = () => {
           👉 <a href="#">https://github.com/eduard0bp</a>
         </p>
         <p>
-          <a href="">#novoprojeto</a> <a href="">#ignite</a>{' '}
+          <a href="">#novoprojeto</a>{' '}
+          <a href="">#ignite</a>{' '}
           <a href="">#rocketseat</a>{' '}
         </p>
       </div>
+
+      <form className='comment-form'>
+        <strong>Deixe seu feedback</strong>
+        <textarea placeholder='Deixe um comentário.'/>
+        <footer>
+          <button type='submit'>Publicar</button>
+        </footer>
+      </form>
     </article>
   )
 }
