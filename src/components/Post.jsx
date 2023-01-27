@@ -1,3 +1,4 @@
+import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import './Post.scss'
 
@@ -6,10 +7,7 @@ export const Post = () => {
     <article className="post">
       <header>
         <div className="author">
-          <img
-            src="https://avatars.githubusercontent.com/u/79476975?v=4"
-            alt=""
-          />
+          <Avatar src="https://github.com/eduard0bp.png" />
           <div className="author-info">
             <strong>Eduardo Batista</strong>
             <span>Web Developer</span>
@@ -31,21 +29,20 @@ export const Post = () => {
           👉 <a href="#">https://github.com/eduard0bp</a>
         </p>
         <p>
-          <a href="">#novoprojeto</a>{' '}
-          <a href="">#ignite</a>{' '}
+          <a href="">#novoprojeto</a> <a href="">#ignite</a>{' '}
           <a href="">#rocketseat</a>{' '}
         </p>
       </div>
 
-      <form className='comment-form'>
+      <form className="comment-form">
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder='Deixe um comentário.'/>
+        <textarea placeholder="Deixe um comentário." />
         <footer>
-          <button type='submit'>Publicar</button>
+          <button type="submit">Publicar</button>
         </footer>
       </form>
       <div>
-        <Comment/>
+        <Comment />
       </div>
     </article>
   )
