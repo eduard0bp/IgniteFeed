@@ -1,37 +1,45 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 import { Avatar } from './Avatar'
 import { Comment } from './Comment'
 import './Post.scss'
 
-export const Post = () => {
+export const Post = ({ author, publishedAt, content }) => {
+  const publishedDateFormatted = format(
+    publishedAt,
+    "d 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR
+    }
+  )
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
   return (
     <article className="post">
       <header>
         <div className="author">
-          <Avatar src="https://github.com/eduard0bp.png" />
+          <Avatar src={author.avatarUrl} />
           <div className="author-info">
-            <strong>Eduardo Batista</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="23 de Janeiro às 20:45h" dateTime="2023-01-23 20:45:30">
-          Publicado há 1h
+        <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+          {publishedDateRelativeToNow}
         </time>
       </header>
       <div className="content">
-        <p>Hello World 👋</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-          recusandae vero id atque totam fuga, nam nostrum quasi, ad dolore
-          aliquid in? Impedit, nesciunt nam. Velit molestiae atque impedit
-          mollitia?
-        </p>
-        <p>
-          👉 <a href="#">https://github.com/eduard0bp</a>
-        </p>
-        <p>
-          <a href="">#novoprojeto</a> <a href="">#ignite</a>{' '}
-          <a href="">#rocketseat</a>{' '}
-        </p>
+        {content.map(line => {
+          if (line.type === "paragraph") {
+            return <p>{line.content}</p>
+          } else if (line.type === 'link') {
+            return <p><a>{line.content}</a></p>
+          }
+        })}
       </div>
 
       <form className="comment-form">
