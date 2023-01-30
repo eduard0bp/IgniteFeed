@@ -1,10 +1,15 @@
 import { format, formatDistanceToNow } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
 import { Avatar } from './Avatar'
 import { Comment } from './Comment'
+import { useState } from 'react'
+import ptBR from 'date-fns/locale/pt-BR'
 import './Post.scss'
 
 export const Post = ({ author, publishedAt, content }) => {
+  const [comments, setComments] = useState(['Exemplo...'])
+
+  const [newCommentText, setNewCommentText] = useState('')
+
   const publishedDateFormatted = format(
     publishedAt,
     "d 'de' LLLL 'às' HH:mm'h'",
@@ -18,6 +23,21 @@ export const Post = ({ author, publishedAt, content }) => {
     addSuffix: true
   })
 
+  const handleCreateNewComment = () => {
+    event.preventDefault()
+
+    if (newCommentText !== '') {
+      const invertComments = [...comments]
+      invertComments.unshift(newCommentText)
+      setComments(invertComments)
+      setNewCommentText('')
+    }
+  }
+
+  const handleNewCommentChange = () => {
+    setNewCommentText(event.target.value)
+  }
+
   return (
     <article className="post">
       <header>
@@ -28,29 +48,43 @@ export const Post = ({ author, publishedAt, content }) => {
             <span>{author.role}</span>
           </div>
         </div>
-        <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>
+        <time
+          title={publishedDateFormatted}
+          dateTime={publishedAt.toISOString()}
+        >
           {publishedDateRelativeToNow}
         </time>
       </header>
       <div className="content">
         {content.map(line => {
-          if (line.type === "paragraph") {
-            return <p>{line.content}</p>
+          if (line.type === 'paragraph') {
+            return <p key={line.content}>{line.content}</p>
           } else if (line.type === 'link') {
-            return <p><a>{line.content}</a></p>
+            return (
+              <p key={line.content}>
+                <a>{line.content}</a>
+              </p>
+            )
           }
         })}
       </div>
 
-      <form className="comment-form">
+      <form onSubmit={handleCreateNewComment} className="comment-form">
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Deixe um comentário." />
+        <textarea
+          name="comment"
+          placeholder="Deixe um comentário."
+          onChange={handleNewCommentChange}
+          value={newCommentText}
+        />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
       <div>
-        <Comment />
+        {comments.map(comment => {
+          return <Comment key={comment} content={comment} />
+        })}
       </div>
     </article>
   )
