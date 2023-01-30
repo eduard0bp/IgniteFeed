@@ -26,16 +26,19 @@ export const Post = ({ author, publishedAt, content }) => {
   const handleCreateNewComment = () => {
     event.preventDefault()
 
-    if (newCommentText !== '') {
-      const invertComments = [...comments]
-      invertComments.unshift(newCommentText)
-      setComments(invertComments)
-      setNewCommentText('')
-    }
+    const invertComments = [...comments]
+    invertComments.unshift(newCommentText)
+    setComments(invertComments)
+    setNewCommentText('')
   }
 
   const handleNewCommentChange = () => {
+    event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
+  }
+
+  const handleNewCommentInvalid = () => {
+    event.target.setCustomValidity('Esse campo é obrigatório!')
   }
 
   const deleteComment = commentToDelete => {
@@ -44,6 +47,8 @@ export const Post = ({ author, publishedAt, content }) => {
     })
     setComments(commentWithoutDeletedOne)
   }
+
+  const isNewCommentEmpty = newCommentText.length === 0
 
   return (
     <article className="post">
@@ -83,9 +88,13 @@ export const Post = ({ author, publishedAt, content }) => {
           placeholder="Deixe um comentário."
           onChange={handleNewCommentChange}
           value={newCommentText}
+          onInvalid={handleNewCommentInvalid}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={isNewCommentEmpty}>
+            Publicar
+          </button>
         </footer>
       </form>
       <div>
